@@ -1,85 +1,57 @@
-apiVersion: v1
-items:
-- apiVersion: machine.openshift.io/v1beta1
-  kind: MachineSet
-  metadata:
-    annotations:
-      machine.openshift.io/GPU: "0"
-      machine.openshift.io/memoryMb: "65536"
-      machine.openshift.io/vCPU: "16"
-    creationTimestamp: "2024-10-12T20:42:29Z"
-    generation: 1
-    labels:
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  annotations:
+    machine.openshift.io/GPU: "0"
+    machine.openshift.io/memoryMb: "65536"
+    machine.openshift.io/vCPU: "16"
+  name: cluster-7wqxl-m9ndm-worker-us-east-2b
+  namespace: openshift-machine-api
+spec:
+  replicas: 3  # Default number of replicas, can be overridden in overlays
+  selector:
+    matchLabels:
       machine.openshift.io/cluster-api-cluster: cluster-7wqxl-m9ndm
-    name: cluster-7wqxl-m9ndm-worker-us-east-2b
-    namespace: openshift-machine-api
-    resourceVersion: "22548"
-    uid: 0b7d8654-426e-4d65-aebf-cb8736daa216
-  spec:
-    replicas: 5
-    selector:
-      matchLabels:
+      machine.openshift.io/cluster-api-machineset: cluster-7wqxl-m9ndm-worker-us-east-2b
+  template:
+    metadata:
+      labels:
         machine.openshift.io/cluster-api-cluster: cluster-7wqxl-m9ndm
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
         machine.openshift.io/cluster-api-machineset: cluster-7wqxl-m9ndm-worker-us-east-2b
-    template:
-      metadata:
-        labels:
-          machine.openshift.io/cluster-api-cluster: cluster-7wqxl-m9ndm
-          machine.openshift.io/cluster-api-machine-role: worker
-          machine.openshift.io/cluster-api-machine-type: worker
-          machine.openshift.io/cluster-api-machineset: cluster-7wqxl-m9ndm-worker-us-east-2b
-      spec:
-        lifecycleHooks: {}
-        metadata: {}
-        providerSpec:
-          value:
-            ami:
-              id: ami-01af87a6ecc18023d
-            apiVersion: machine.openshift.io/v1beta1
-            blockDevices:
-            - ebs:
-                encrypted: true
-                iops: 0
-                kmsKey:
-                  arn: ""
-                volumeSize: 100
-                volumeType: gp2
-            credentialsSecret:
-              name: aws-cloud-credentials
-            deviceIndex: 0
-            iamInstanceProfile:
-              id: cluster-7wqxl-m9ndm-worker-profile
-            instanceType: m5.4xlarge
-            kind: AWSMachineProviderConfig
-            metadata:
-              creationTimestamp: null
-            metadataServiceOptions: {}
-            placement:
-              availabilityZone: us-east-2b
-              region: us-east-2
-            securityGroups:
-            - filters:
-              - name: tag:Name
-                values:
-                - cluster-7wqxl-m9ndm-worker-sg
-            subnet:
-              filters:
-              - name: tag:Name
-                values:
-                - cluster-7wqxl-m9ndm-private-us-east-2b
-            tags:
-            - name: kubernetes.io/cluster/cluster-7wqxl-m9ndm
-              value: owned
-            - name: Stack
-              value: project ocp4-cluster-7wqxl
-            - name: env_type
-              value: ocp4-cluster
-            - name: guid
-              value: 7wqxl
-            - name: owner
-              value: unknown
-            - name: uuid
-              value: 9ff393e5-08bf-5a26-81da-36e06fe4df5e
-            userDataSecret:
-              name: worker-user-data
-
+    spec:
+      providerSpec:
+        value:
+          ami:
+            id: ami-01af87a6ecc18023d
+          apiVersion: machine.openshift.io/v1beta1
+          blockDevices:
+          - ebs:
+              encrypted: true
+              volumeSize: 100
+              volumeType: gp2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          iamInstanceProfile:
+            id: cluster-7wqxl-m9ndm-worker-profile
+          instanceType: m5.4xlarge
+          kind: AWSMachineProviderConfig
+          placement:
+            availabilityZone: us-east-2b
+            region: us-east-2
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - cluster-7wqxl-m9ndm-worker-sg
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - cluster-7wqxl-m9ndm-private-us-east-2b
+          tags:
+          - name: kubernetes.io/cluster/cluster-7wqxl-m9ndm
+            value: owned
+          userDataSecret:
+            name: worker-user-data
