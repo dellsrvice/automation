@@ -82,12 +82,4 @@ items:
               value: 9ff393e5-08bf-5a26-81da-36e06fe4df5e
             userDataSecret:
               name: worker-user-data
-  status:
-    availableReplicas: 5
-    fullyLabeledReplicas: 5
-    observedGeneration: 1
-    readyReplicas: 5
-    replicas: 5
-kind: List
-metadata:
-  resourceVersion: ""
+
