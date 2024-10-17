@@ -8,7 +8,7 @@ metadata:
   name: cluster-7wqxl-m9ndm-worker-us-east-2b
   namespace: openshift-machine-api
 spec:
-  replicas: 4 # Default number of replicas, can be overridden in overlays
+  replicas: 3 # Default number of replicas, can be overridden in overlays
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: cluster-7wqxl-m9ndm
